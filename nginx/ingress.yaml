@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: a0be4d0ee823f48b8a3a537c0d5c2c3d-811072469.us-east-1.elb.amazonaws.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    -  a0be4d0ee823f48b8a3a537c0d5c2c3d-811072469.us-east-1.elb.amazonaws.com
+    secretName: my-app-tls
