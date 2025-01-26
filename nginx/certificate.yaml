@@ -7,6 +7,5 @@ spec:
   secretName: my-app-tls
   issuerRef:
     name: letsencrypt-prod
-  commonName: a0be4d0ee823f48b8a3a537c0d5c2c3d-811072469.us-east-1.elb.amazonaws.com
   dnsNames:
     - a0be4d0ee823f48b8a3a537c0d5c2c3d-811072469.us-east-1.elb.amazonaws.com
