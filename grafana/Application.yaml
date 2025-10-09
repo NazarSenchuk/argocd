@@ -13,8 +13,8 @@ spec:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   source:
-    path: "helm-values-files/telegraf"
-    repoURL: https://github.com/YotpoLtd/argocd-example.git
+    path: "grafana"
+    repoURL: git@github.com:NazarSenchuk/argocd.git
     targetRevision: HEAD
     plugin:
       name: helm-yotpo
