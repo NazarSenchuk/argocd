@@ -1,0 +1,89 @@
+#image
+image:
+  repository: grafana/grafana
+  tag: "11.0.0"
+  pullPolicy: IfNotPresent
+
+#administration
+adminUser: "admin"
+adminPassword: "prom-operator"
+
+#service
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+#persistence
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+#configuration
+grafana.ini:
+  paths:
+    data: /var/lib/grafana/data
+    logs: /var/log/grafana
+    plugins: /var/lib/grafana/plugins
+  log:
+    mode: console
+  server:
+    domain: localhost
+    root_url: "%(protocol)s://%(domain)s/"
+
+
+#database
+database:
+  type: sqlite3  
+
+#dashboards
+dashboards:
+  default:  
+    k8s-cluster:
+      gnetId: 315
+      revision: 1
+      datasource: Prometheus
+    node-exporter:
+      gnetId: 11074
+      revision: 1
+      datasource: Prometheus
+    custom-api-metrics:
+      file: custom-api-dashboard.json
+    custom-business-metrics:
+      file: business-metrics-dashboard.json
+#datasources
+#datasources:
+#  datasources.yaml:
+#    apiVersion: 1
+#    datasources:
+#      - name: Prometheus
+#        type: prometheus
+#        url: http://prometheus-server.monitoring.svc.cluster.local
+#        access: proxy
+#        isDefault: true
+ #       jsonData:
+#          timeInterval: "5s"
+#          queryTimeout: "60s"
+#      
+#      - name: Loki
+#        type: loki
+#        url: http://loki.monitoring.svc.cluster.local:3100
+#        access: proxy
+#        jsonData:
+#          maxLines: 1000
+#ingress
+ingress:
+  enabled: false
+
+#resources
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 128Mi

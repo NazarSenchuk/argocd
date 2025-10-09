@@ -1,0 +1,51 @@
+# application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  labels:
+    app: grafana
+    environment: production
+    team: monitoring
+spec:
+  project: default
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  source:
+    path: "helm-values-files/telegraf"
+    repoURL: https://github.com/YotpoLtd/argocd-example.git
+    targetRevision: HEAD
+    plugin:
+      name: helm-yotpo
+      env:
+        - name: HELM_RELEASE_NAME
+          value: "grafana"
+        - name: HELM_CHART_VERSION
+          value: "10.0.0"
+        - name: NAMESPACE
+          value: "monitoring"
+        - name: HELM_REPO_URL
+          value: "https://grafana.github.io/helm-charts/"
+        - name: HELM_CHART_NAME
+          value: "grafana"
+        - name: HELM_VALUES_FILE
+          value: "values/default-values.yaml"
+      
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
