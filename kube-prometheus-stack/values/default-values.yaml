@@ -5,7 +5,7 @@
 global:
   # Timezone for all components
   # timezone: "Europe/Kyiv"
-  
+  imagePullSecrets: [] 
   # Image settings
   # image:
   #   repository: quay.io/prometheus-community/prometheus
