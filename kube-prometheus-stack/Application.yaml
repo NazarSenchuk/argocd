@@ -15,12 +15,12 @@ metadata:
 spec:
   project: default
   sources:
-    - chart: grafana
-      repoURL: https://grafana.github.io/helm-charts/
-      targetRevision: 10.0.0
+    - chart: prometheus-community/kube-prometheus-stack 
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 78.0.0
       helm:
         valueFiles:
-          - $values/grafana/values/default-values.yaml
+          - $values/kube-prometheus-stack/values/default-values.yaml
     - repoURL: https://github.com/NazarSenchuk/argocd/
       targetRevision: HEAD
       ref: values

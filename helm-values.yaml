@@ -1,8 +1,0 @@
-server:
- name: server
- config:
-   configManagementPlugins: |
-       - name: helm-yotpo
-         generate:
-           command: ["sh", "-c"]
-           args: ["helm template --version ${HELM_CHART_VERSION} --repo ${HELM_REPO_URL} --namespace ${NAMESPACE}  $HELM_CHART_NAME --name-template=${HELM_RELEASE_NAME} -f $(pwd)/${HELM_VALUES_FILE} "]
