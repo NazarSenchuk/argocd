@@ -18,10 +18,8 @@ grafana:
   enabled: true
   
   # Administrative settings
-  admin:
-    #existingSecret: "grafana-admin-credentials"  
-    userKey: admin-user
-    passwordKey: admin-password
+  adminUser: admin
+  adminPassword: prom-operator
   
   # Dashboards and data sources
   defaultDashboardsEnabled: true

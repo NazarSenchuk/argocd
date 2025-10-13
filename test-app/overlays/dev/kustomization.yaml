@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: dev-overlay
+
+commonLabels:
+  app: backend
+  environment: dev
+  team: backend-team
+
+
+images:
+  - name: senchuknazar123/test
+    newTag: v0.1.1
+
+resources:
+  - ../../base
