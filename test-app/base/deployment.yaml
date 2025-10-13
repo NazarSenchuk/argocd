@@ -17,7 +17,7 @@ spec:
         app: backend
     spec:
       imagePullSecrets:
-      - name: regcred
+      - name: dockerhub-secret
       containers:
       - image: senchuknazar123/test
         name: test
