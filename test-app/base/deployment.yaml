@@ -3,17 +3,20 @@ metadata:
   labels:
     app: backend
   name: backend
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: backend
-  strategy: {}
+
   template:
     metadata:
       labels:
         app: backend
     spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
       containers:
       - image: senchuknazar123/test
         name: test

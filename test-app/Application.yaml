@@ -16,7 +16,7 @@ spec:
     repoURL: git@github.com:NazarSenchuk/argocd.git
     targetRevision: HEAD
     path: test-app/overlays/dev
-  destination:
+  destination:  
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
