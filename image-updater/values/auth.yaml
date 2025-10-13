@@ -1,0 +1,17 @@
+serviceAccount:
+  name: argocd-image-updater
+
+extraArgs:
+  - --interval
+  - 1m
+
+rbac:
+  create: true
+
+config:
+  registries:
+    - name: Docker Hub
+      credentials: secret:argocd/dockerhub#token
+      api_url: https://registry-1.docker.io
+      ping: yes
+      default: true
