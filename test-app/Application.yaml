@@ -7,6 +7,7 @@ metadata:
   annotations:
     argocd-image-updater.argoproj.io/image-list: senchukanzar123/test
     argocd-image-updater.argoproj.io/users.update-strategy: semver
+    argocd-image-updater.argoproj.io/sessionservice.pull-secret: pullsecret:default/regcred
     argocd-image-updater.argoproj.io/write-back-method: git
   finalizers:
   - resources-finalizer.argocd.argoproj.io/foreground
