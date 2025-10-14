@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - senchuknazar123/test:v0.1.6
+  - senchuknazar123/test:v0.1.7
