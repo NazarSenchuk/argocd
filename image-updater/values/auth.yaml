@@ -11,6 +11,6 @@ config:
   registries:
     - name: Docker Hub
       credentials: pullsecret:argocd/dockerhub-secret
-      api_url: https://registry-1.docker.io
+      api_url: https://index.docker.io
       ping: yes
       default: true
