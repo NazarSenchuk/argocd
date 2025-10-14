@@ -6,7 +6,7 @@ metadata:
   namespace: argocd
   annotations:
 
-    argocd-image-updater.argoproj.io/image-list: my_app=senchuknazar123/test
+    argocd-image-updater.argoproj.io/image-list: dev=senchuknazar123/test
     # 2. Use the alias for all subsequent configurations
     argocd-image-updater.argoproj.io/my_app.update-strategy: semver
 

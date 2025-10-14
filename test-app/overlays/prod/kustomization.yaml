@@ -13,7 +13,8 @@ commonLabels:
 
 
 images:
-  - name: senchuknazar123/test-prod
+  - name: senchuknazar123/test
+    newName: senchuknazar123/test-prod
     newTag: v0.1.1
 
 resources:
