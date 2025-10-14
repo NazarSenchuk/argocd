@@ -1,0 +1,8 @@
+kubectl create  secret docker-registry dockerhub-secret \
+  --docker-username senchuknazar123 \
+  --docker-password dckr_pat_yqcADcjK45M72J-mr20dF6HRSmY \
+  --docker-server "https://index.docker.io"
+
+
+#Set up the secret namespace and name into image updater credentials
+#Updater must be in argocd namespace

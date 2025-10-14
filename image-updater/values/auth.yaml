@@ -10,7 +10,7 @@ rbac:
 config:
   registries:
     - name: Docker Hub
-      credentials: secret:argocd/dockerhub-secret
+      credentials: pullsecret:argocd/dockerhub-secret
       api_url: https://registry-1.docker.io
       ping: yes
       default: true

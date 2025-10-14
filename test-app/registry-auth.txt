@@ -1,0 +1,4 @@
+kubectl create  secret docker-registry dockerhub-secret \
+  --docker-username username \
+  --docker-password pat \
+  --docker-server "https://index.docker.io"
