@@ -1,6 +1,6 @@
 kubectl create  secret docker-registry dockerhub-secret \
-  --docker-username senchuknazar123 \
-  --docker-password dckr_pat_yqcADcjK45M72J-mr20dF6HRSmY \
+  --docker-username name \
+  --docker-password pat \
   --docker-server "https://index.docker.io"
 
 
