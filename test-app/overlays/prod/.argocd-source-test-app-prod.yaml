@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - senchuknazar123/test-prod:v0.1.13
