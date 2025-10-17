@@ -1,0 +1,46 @@
+# application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluentbit
+  namespace: argocd
+  labels:
+    app: fluentbit
+    environment: production
+    team: monitoring
+    
+  finalizers:
+   - resources-finalizer.argocd.argoproj.io
+  
+spec:
+  project: default
+  sources:
+    - chart: fluent-bit
+      repoURL: https://fluent.github.io/helm-charts
+      targetRevision: 0.22.1
+      helm:
+        valueFiles:
+          - $values/fluentbit/values/kubernetes-parsing.yaml
+      
+    - repoURL: https://github.com/NazarSenchuk/argocd/
+      targetRevision: HEAD
+      ref: values
+
+      
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
