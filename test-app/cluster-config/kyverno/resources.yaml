@@ -1,0 +1,56 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: audit-pods-without-resources
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: audit-resources
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+              - Deployment
+      validate:
+        message: "Pod is missing CPU/memory requests or limits"
+        pattern:
+          spec:
+            containers:
+            - name: "*"
+              resources:
+                requests:
+                  memory: "?*"
+                  cpu: "?*"
+                limits:
+                  memory: "?*"
+                  cpu: "?*"
+
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: set-default-resources
+spec:
+  background: false
+  mutateExistingOnPolicyUpdate: false
+  rules:
+    - name: set-default-requests-limits
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+      mutate:
+        patchStrategicMerge:
+          spec:
+            containers:
+              - (name): "*"
+                resources:
+                  requests:
+                    +(cpu): "100m"
+                    +(memory): "128Mi"
+                  limits:
+                    +(cpu): "500m"
+                    +(memory): "512Mi"

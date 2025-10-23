@@ -1,0 +1,5 @@
+vault write auth/oidc/config \
+     oidc_discovery_url="http://keycloak.keycloak.svc.cluster.local:80/realms/master/" \
+     oidc_client_id="vault" \
+     oidc_client_secret="eIDpJFXq024pF8SEE8nnpZF0nzlSy1ua" \
+     default_role="reader"

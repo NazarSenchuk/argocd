@@ -1,0 +1,27 @@
+grafana:
+  grafana.ini:
+    server:
+      # Define how Grafana is accessed externally
+      # You may need to adjust this based on your ingress or NodePort setup
+      root_url: "http://localhost:3000/"
+    auth:
+      disable_login_form: false
+    auth.generic_oauth:
+      verbose_logging: true
+      enabled: true
+      name: Keycloak
+      allow_sign_up: true
+      client_id: grafana
+      client_secret: CyUZVLJqV2PI2T2ojADWhIW65gPRazry
+      scopes: openid email profile
+      # auth_url must be accessible from the user's browser
+      auth_url: http://192.168.49.2:30080/realms/master/protocol/openid-connect/auth
+      # token_url and api_url are server-to-server communications
+      token_url: http://keycloak.keycloak.svc.cluster.local:80/realms/master/protocol/openid-connect/token
+      api_url: http://keycloak.keycloak.svc.cluster.local:80/realms/master/protocol/openid-connect/userinfo
+      login_attribute_path: preferred_username
+      name_attribute_path: name
+      email_attribute_path: email
+      groups_attribute_path: groups
+      role_attribute_path: contains(resource_access.grafana.roles[*], 'grafana-admin') && 'Admin' || contains(resource_access.grafana.roles[*], 'grafana-editor') && 'Editor' || contains(resource_access.grafana.roles[*], 'grafana-viewer') && 'Viewer'
+      allow_assign_grafana_admin: true

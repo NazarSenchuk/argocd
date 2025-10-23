@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  url: https://localhost:8080
+  oidc.config: |
+    name: Keycloak
+    issuer: http://192.168.49.2:30080/realms/master
+    clientID: argocd
+    clientSecret: $oidc.keycloak.clientSecret
+    requestedScopes: ["roles" ,"openid", "profile", "email", "groups"]

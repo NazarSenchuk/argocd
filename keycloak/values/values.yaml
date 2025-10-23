@@ -1,0 +1,46 @@
+auth:
+  adminUser: admin
+  adminPassword: "password"  # Change this
+  managementPassword: "password"  # Change this
+
+postgresql:
+  auth:
+    postgresPassword: "password"  # Change this
+    password: "password"  # Change this
+
+
+replicaCount: 1
+
+service:
+  type: ClusterIP  # or ClusterIP, NodePort
+  ports:
+    http: 80
+    https: 443
+
+ingress:
+  enabled: false
+  hostname: keycloak.example.com  # Your domain
+  tls: true
+
+proxy: "edge"  # or "reencrypt", "passthrough"
+
+extraEnvVars:
+  - name: KEYCLOAK_HTTP_RELATIVE_PATH
+    value: "/auth"  # If using path-based routing
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+
+postgresql:
+  primary:
+    persistence:
+      size: 3Gi
+
+readinessProbe:
+  enabled: true
+livenessProbe:
+  enabled: true

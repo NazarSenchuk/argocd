@@ -1,0 +1,33 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-environment-label
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: require-ns-environment-label
+    match:
+      any:
+      - resources:
+          kinds:
+          - Namespace
+    validate:
+      message: "You must have label `environment` set to either 'dev', 'staging', or 'prod' on all new namespaces."
+      pattern:
+        metadata:
+          labels:
+            environment: "dev | staging | prod"  
+  - name: require-resources-environment-label
+    match:
+      any: 
+      - resources:
+          kinds:
+          - Deployment
+          - StatefulSet
+          - DaemonSet
+    validate:
+      message: "You must have label `environment` set to either 'dev', 'staging', or 'prod' on all new resources."
+      pattern:
+        metadata:
+          labels:
+            environment: "dev | staging | prod"

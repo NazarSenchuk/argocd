@@ -1,0 +1,56 @@
+config:                                                                                                        
+  service: |                                                                                                   
+    [SERVICE]                                                                                                  
+        Daemon Off                                                                                             
+        Flush {{ .Values.flush }}                                                                              
+        Log_Level {{ .Values.logLevel }}                                                                       
+        Parsers_File /fluent-bit/etc/parsers.conf                                                              
+        Parsers_File /fluent-bit/etc/conf/custom_parsers.conf                                                  
+        HTTP_Server On                                                                                         
+        HTTP_Listen 0.0.0.0                                                                                    
+        HTTP_Port {{ .Values.metricsPort }}                                                                    
+        Health_Check On
+     inputs: |                                                                                                    
+    [INPUT]                                                                                                    
+        Name tail                                                                                              
+        Path /var/log/containers/nginx*.log                                                                    
+        DB     /var/log/flb_nginx.db                                                                           
+        Parser docker                                                                                          
+        Tag nginx.*                                                                                            
+        Mem_Buf_Limit 100MB                                                                                    
+        Skip_Long_Lines On                                                                                     
+                                                                                                               
+    [INPUT]                                                                                                    
+        Name tail
+        Path /var/log/containers/kube*.log
+        DB     /var/log/flb_kube.db
+        Parser docker
+        Tag kube.*
+        Mem_Buf_Limit 100MB 
+        Skip_Long_Lines On
+
+     [INPUT]                                                                                                    
+        name            kubernetes_events                                                                      
+        tag             events.*                                                                               
+        kube_url        https://kubernetes.default.svc
+        kube_retention_time 1h
+        interval_sec 5
+        DB     /var/log/flb_events.db
+         
+    [INPUT]
+        Name systemd
+        Tag host.*
+        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+## https://docs.fluentbit.io/manual/pipeline/filters
+  filters: |
+    [FILTER]
+        Name modify
+        Match * 
+        Rename log content
+    [FILTER]
+        Name nest
+        Match *
+        Operation lift
+        Nested_under kubernetes
+        Add_prefix   kubernetes_
+

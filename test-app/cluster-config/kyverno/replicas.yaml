@@ -1,0 +1,21 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: replicas-controller
+spec: 
+  rules:
+  - name: replicas-controller
+    match:
+      any:
+      - resources:
+         kinds:
+          - Deployment
+          - StatefulSet
+
+    validate:
+      failureAction:  Enforce
+      message: "Decrease replicas"
+      pattern:
+        spec:
+          replicas: "<=3"
+
